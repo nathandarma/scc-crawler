@@ -1,0 +1,23 @@
+name: SCC daily crawl
+on:
+  schedule:
+    - cron: "30 19 * * *"   # 6:30am Sydney during daylight saving (5:30am in winter)
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: python3 -m unittest discover -s tests -t .
+      - run: python3 crawl.py crawl_config.json data/
+      - name: Commit results
+        run: |
+          git config user.name "scc-crawler"; git config user.email "scc-crawler@users.noreply.github.com"
+          git add data/
+          git diff --cached --quiet || git commit -m "crawl $(date -u +%F)"
+          git push
