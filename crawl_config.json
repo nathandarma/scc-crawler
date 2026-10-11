@@ -1,0 +1,144 @@
+{
+ "user_agent": "Mozilla/5.0 (compatible; SearchCommandCentre/1.0; +https://www.nathandarma.com/)",
+ "workers": 4,
+ "delay": 0.25,
+ "sites": [
+  {
+   "site": "nd",
+   "base": "https://www.nathandarma.com/",
+   "hosts": [
+    "www.nathandarma.com",
+    "nathandarma.com"
+   ],
+   "max_pages": 700,
+   "host_checks": [
+    {
+     "url": "http://www.nathandarma.com/",
+     "expect": "https://www.nathandarma.com/"
+    },
+    {
+     "url": "https://nathandarma.com/",
+     "expect": "https://www.nathandarma.com/"
+    },
+    {
+     "url": "https://marlin-rust-dc32.squarespace.com/",
+     "expect": "https://www.nathandarma.com/"
+    }
+   ]
+  },
+  {
+   "site": "sec",
+   "base": "https://someoneelsecollective.com/",
+   "hosts": [
+    "someoneelsecollective.com",
+    "www.someoneelsecollective.com"
+   ],
+   "max_pages": 150,
+   "host_checks": [
+    {
+     "url": "http://someoneelsecollective.com/",
+     "expect": "https://someoneelsecollective.com/"
+    },
+    {
+     "url": "https://www.someoneelsecollective.com/",
+     "expect": "https://someoneelsecollective.com/"
+    }
+   ]
+  },
+  {
+   "site": "fv",
+   "base": "https://get-fovea.app/",
+   "hosts": [
+    "get-fovea.app"
+   ],
+   "max_pages": 500,
+   "host_checks": [
+    {
+     "url": "http://get-fovea.app/",
+     "expect": "https://get-fovea.app/"
+    }
+   ],
+   "redirect_checks": [
+    {
+     "from": "/best-photo-culling-software-wedding-photographers/",
+     "expect_to": "/best-photo-culling-software-wedding-photographers"
+    }
+   ]
+  },
+  {
+   "site": "fo",
+   "base": "https://www.fortebuildinggroup.com.au/",
+   "hosts": [
+    "www.fortebuildinggroup.com.au",
+    "fortebuildinggroup.com.au"
+   ],
+   "max_pages": 150,
+   "host_checks": [
+    {
+     "url": "https://fortebuildinggroup.com.au/",
+     "expect": "https://www.fortebuildinggroup.com.au/"
+    },
+    {
+     "url": "https://cheetah-ocelot-kyw4.squarespace.com/",
+     "expect": "https://www.fortebuildinggroup.com.au/"
+    }
+   ],
+   "redirect_checks": [
+    {
+     "from": "https://fortebuildinggroup.com.au/home-bathroom-kitchen-renovations-in-canberra/"
+    },
+    {
+     "from": "https://fortebuildinggroup.com.au/luxury-home-builder-canberra/"
+    },
+    {
+     "from": "https://fortebuildinggroup.com.au/new-homes-canberra/"
+    },
+    {
+     "from": "https://fortebuildinggroup.com.au/custom-home-builders-near-me/"
+    },
+    {
+     "from": "https://fortebuildinggroup.com.au/house-extensions-canberra/"
+    },
+    {
+     "from": "https://fortebuildinggroup.com.au/home-renovations-canberra/"
+    },
+    {
+     "from": "https://fortebuildinggroup.com.au/custom-home-builder-canberra/"
+    },
+    {
+     "from": "https://fortebuildinggroup.com.au/kitchen-renovations-near-me/"
+    },
+    {
+     "from": "https://fortebuildinggroup.com.au/new-home-builders-canberra/"
+    },
+    {
+     "from": "https://fortebuildinggroup.com.au/custom-home-builder-act/"
+    },
+    {
+     "from": "https://fortebuildinggroup.com.au/custom-house-builder-near-me/"
+    },
+    {
+     "from": "https://fortebuildinggroup.com.au/bathroom-renovations-near-me/"
+    },
+    {
+     "from": "https://fortebuildinggroup.com.au/custom-home-builder-griffith/"
+    },
+    {
+     "from": "https://fortebuildinggroup.com.au/custom-home-builders-braddon-act/"
+    },
+    {
+     "from": "https://fortebuildinggroup.com.au/house-extension-builder-near-me/"
+    },
+    {
+     "from": "https://fortebuildinggroup.com.au/bathroom-renovations-canberra/"
+    },
+    {
+     "from": "https://fortebuildinggroup.com.au/new-home-builder-nsw/"
+    },
+    {
+     "from": "https://fortebuildinggroup.com.au/about-us/"
+    }
+   ]
+  }
+ ]
+}
