@@ -26,3 +26,11 @@ for the Search Command Centre dashboard. Standard-library Python 3.10+, no insta
 crawl_issues, crawl_resolved, crawl_changes, crawl_checks, crawl_robots, crawl_summary — site health and alerts
 crawl_pages — per-URL facts.  crawl_links — internal link graph.  crawl_images — every image with alt/size.
 crawl_facts — drop-in replacement for static/crawl_facts.json used by build2.py.
+
+## Repository layout (whole dashboard pipeline)
+- `RUNBOOK.md` — weekly refresh steps for the Search Command Centre (the SEO project only holds a pointer to this file)
+- `build2.py` — builds dashboard datasets from Search Console, GA4 and crawl data
+- `static/` — curated datasets (issues, actions, competitors, gaps, speed, cannibalisation, fallback crawl facts)
+- `index_urls.json` — URLs checked with URL Inspection each week
+- `crawl.py`, `crawl_config.json`, `tests/`, `.github/workflows/crawl.yml` — the daily crawler
+- `data/` — written by the daily crawl; don't edit by hand

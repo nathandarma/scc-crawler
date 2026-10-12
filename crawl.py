@@ -25,7 +25,7 @@ from concurrent.futures import ThreadPoolExecutor
 BOTS = ['Googlebot', 'Bingbot', 'GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-SearchBot', 'Claude-User',
         'PerplexityBot', 'Google-Extended', 'Applebot-Extended', 'CCBot']
 AI_SEARCH_BOTS = ['OAI-SearchBot', 'ChatGPT-User', 'Claude-SearchBot', 'Claude-User', 'PerplexityBot']
-DEFAULT_EXCLUDE = [r'/cart\b', r'/account\b', r'/commerce/', r'[?&]format=', r'/s/', r'/config\b', r'/api/', r'/search\b',
+DEFAULT_EXCLUDE = [r'/cdn-cgi/', r'/cart\b', r'/account\b', r'/commerce/', r'[?&]format=', r'/s/', r'/config\b', r'/api/', r'/search\b',
                    r'\.(jpe?g|png|gif|webp|avif|svg|pdf|zip|mp4|mov|css|js|ico|xml|txt)(\?|$)']
 SEVERITY = {  # check -> (severity, plain-English label)
     'broken_internal_link': ('critical', 'Internal link to a page that errors'),
@@ -37,6 +37,7 @@ SEVERITY = {  # check -> (severity, plain-English label)
     'redirect_missing': ('critical', 'Legacy URL is not redirecting as planned'),
     'host_not_redirecting': ('warning', 'Alternate host does not redirect to the main site'),
     'ai_bots_blocked': ('warning', 'robots.txt blocks AI search crawlers'),
+    'robots_unreadable': ('warning', 'robots.txt could not be read'),
     'no_sitemap': ('warning', 'No XML sitemap found'),
     'missing_title': ('warning', 'Page has no title'),
     'duplicate_title': ('warning', 'Title shared with other pages'),
@@ -166,7 +167,8 @@ def read_robots(base, ua):
     text = r['body'].decode('utf-8', 'replace') if r['status'] == 200 else ''
     rp = urllib.robotparser.RobotFileParser(); rp.parse(text.splitlines())
     home = urllib.parse.urljoin(base, '/')
-    allowed = {b: rp.can_fetch(b, home) for b in BOTS}
+    allowed = {b: rp.can_fetch(b, home) for b in BOTS} if r['status'] in (200, 404) else {b: None for b in BOTS}
+    allowed['_status'] = r['status']
     maps = re.findall(r'(?im)^\s*sitemap:\s*(\S+)', text)
     return allowed, maps
 
@@ -270,7 +272,9 @@ def find_issues(site, base, c):
     ok = {u: p for u, p in pages.items() if p['status'] == 200 and not p['redirect'] and 'title' in p}
     indexable = {u: p for u, p in ok.items() if not p['noindex'] and (not p['canonical'] or p['canonical'] == u)}
 
-    blocked = [b for b in AI_SEARCH_BOTS + ['GPTBot', 'ClaudeBot', 'Google-Extended'] if not c['robots'].get(b, True)]
+    if c['robots'].get('_status') not in (200, 404):
+        add('robots_unreadable', urllib.parse.urljoin(base, '/robots.txt'), f'robots.txt returned {c["robots"].get("_status")}, so bot access could not be checked.')
+    blocked = [b for b in AI_SEARCH_BOTS + ['GPTBot', 'ClaudeBot', 'Google-Extended'] if c['robots'].get(b) is False]
     if blocked: add('ai_bots_blocked', base, 'Blocked: ' + ', '.join(blocked) + '. Search-oriented bots (OAI-SearchBot, Claude-SearchBot, PerplexityBot) are what AI answers cite from.')
     if not c['sitemap']: add('no_sitemap', base, 'Tried robots.txt Sitemap lines, /sitemap.xml and /sitemap-index.xml.')
 

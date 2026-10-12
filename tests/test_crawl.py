@@ -78,6 +78,24 @@ class CrawlTest(unittest.TestCase):
         p = [p for p in self.res['pages'] if crawl.path_of(p['url']) == '/'][0]
         self.assertIn('LocalBusiness', p['schema'])
 
+class RobotsAndCdnTest(unittest.TestCase):
+    def test_unreadable_robots_is_reported_not_assumed_allowed(self):
+        site = Site(); out = tempfile.mkdtemp()
+        try:
+            site.routes['/robots.txt'] = (403, {'Content-Type': 'text/plain'}, 'forbidden')
+            res = crawl.run(cfg(site), out, today='2026-10-11')
+            self.assertEqual(res['robots']['t']['_status'], 403)
+            self.assertTrue(any(i['check'] == 'robots_unreadable' for i in res['issues']))
+            self.assertFalse(any(i['check'] == 'ai_bots_blocked' for i in res['issues']))
+        finally: site.stop()
+    def test_cloudflare_email_protection_links_are_ignored(self):
+        site = Site(); out = tempfile.mkdtemp()
+        try:
+            site.routes['/'] = site.routes['/'][:2] + (site.routes['/'][2].replace('</body>', '<a href="/cdn-cgi/l/email-protection#abc">[email]</a></body>'),)
+            res = crawl.run(cfg(site), out, today='2026-10-11')
+            self.assertFalse(any('cdn-cgi' in i['url'] for i in res['issues']))
+        finally: site.stop()
+
 class DiffTest(unittest.TestCase):
     def test_second_run_reports_changes_and_resolved_issues(self):
         site = Site(); out = tempfile.mkdtemp()
