@@ -1,1 +1,1 @@
-[]
+[{"site":"fv","check":"broken_internal_link","severity":"critical","label":"Internal link to a page that errors","url":"https://get-fovea.app/cdn-cgi/l/email-protection","detail":"Returns 404. Linked from 8 page(s): /contact, /partnerships, /press, /privacy, /refund-policy.","first_seen":"2026-10-11","resolved":"2026-10-12"}]
