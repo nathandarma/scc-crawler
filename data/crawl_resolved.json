@@ -1,1 +1,1 @@
-[]
+[{"site":"sec","check":"no_sitemap","severity":"warning","label":"No XML sitemap found","url":"https://someoneelsecollective.com/","detail":"Tried robots.txt Sitemap lines, /sitemap.xml and /sitemap-index.xml.","first_seen":"2026-10-11","resolved":"2026-10-13"}]
