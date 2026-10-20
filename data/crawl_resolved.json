@@ -1,1 +1,1 @@
-[{"site":"fo","check":"slow_response","severity":"info","label":"Server response over 1 second","url":"https://www.fortebuildinggroup.com.au/","detail":"1001 ms.","first_seen":"2026-10-18","resolved":"2026-10-19"}]
+[{"site":"nd","check":"slow_response","severity":"info","label":"Server response over 1 second","url":"https://www.nathandarma.com/blog","detail":"1150 ms.","first_seen":"2026-10-19","resolved":"2026-10-20"}]
