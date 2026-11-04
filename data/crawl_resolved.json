@@ -1,1 +1,1 @@
-[]
+[{"site":"fv","check":"slow_response","severity":"info","label":"Server response over 1 second","url":"https://get-fovea.app/auth/auth-code-error","detail":"1035 ms.","first_seen":"2026-11-03","resolved":"2026-11-04"}]
