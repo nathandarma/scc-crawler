@@ -1,1 +1,1 @@
-[]
+[{"site":"fo","check":"host_not_redirecting","severity":"warning","label":"Alternate host does not redirect to the main site","url":"https://fortebuildinggroup.com.au/","detail":"First response 503, ended at https://fortebuildinggroup.com.au/; expected a 301 to https://www.fortebuildinggroup.com.au/.","first_seen":"2026-11-11","resolved":"2026-11-12"}]
