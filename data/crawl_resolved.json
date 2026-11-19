@@ -1,1 +1,1 @@
-[]
+[{"site":"sec","check":"slow_response","severity":"info","label":"Server response over 1 second","url":"https://someoneelsecollective.com/","detail":"1737 ms.","first_seen":"2026-11-18","resolved":"2026-11-19"}]
